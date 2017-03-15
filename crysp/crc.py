@@ -45,7 +45,8 @@ def crc(data,table,Xinit=0,Xfinal=None):
     print("crc: bytes input required")
     return None
   r = Bits(Xinit,table[0].size)
-  for b in newbytes(data):
+  data = struct.unpack("%dB"%len(data), data)
+  for b in data:
     p = table[(r.ival^b)&0xff]
     r = (r>>8)^p
   if Xfinal:
@@ -56,7 +57,7 @@ def crc_back_pos(data,pos,table,Xfinal,c):
   if not isinstance(data,bytes):
     print("crc: bytes input required")
     return None
-  data = newbytes(data)
+  data = struct.unpack("%dB"%len(data), data)
   if not (0<=pos<len(data)):
     print("crc_back: pos error")
     return None

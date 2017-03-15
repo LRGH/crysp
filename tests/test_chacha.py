@@ -87,7 +87,8 @@ def test_chacha_002():
 # -------------------------------------------------------------------
 
 def tobits(s):
-    x = newbytes([int(x,16) for x in s.split()])
+    s = s.split()
+    x = struct.pack("%dB"%len(s), *[int(x,16) for x in s])
     return Bits(x,bitorder=1)
 
 def test_chacha_003():

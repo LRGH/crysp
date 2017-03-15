@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
-from builtins import bytes as newbytes
 
 # This code is part of crysp
 # Copyright (C) 2013 Axel Tillequin (bdcht3@gmail.com) 
@@ -33,9 +32,9 @@ class Mode(object):
 
     # xor input byte strings (over min length):
     def xorstr(self,a,b):
-        a = newbytes(a)
-        b = newbytes(b)
-        return newbytes([x^y for (x,y) in zip(a,b)])
+        a = struct.unpack("%dB"%len(a), a)
+        b = struct.unpack("%dB"%len(b), b)
+        return struct.pack("%dB"%min(len(a),len(b)), *[x^y for (x,y) in zip(a,b)])
 
 # -----------------------------------------------------------------------------
 # Electronic Code Book, default padding is pkcs7
@@ -278,7 +277,7 @@ class Chain(object):
 
     # xor input byte strings (over min length):
     def xorstr(self,a,b):
-        a = newbytes(a)
-        b = newbytes(b)
-        return newbytes([x^y for (x,y) in zip(a,b)])
+        a = struct.unpack("%dB"%len(a), a)
+        b = struct.unpack("%dB"%len(b), b)
+        return struct.pack("%dB"%min(len(a),len(b)), *[x^y for (x,y) in zip(a,b)])
 

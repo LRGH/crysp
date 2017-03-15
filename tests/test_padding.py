@@ -124,7 +124,7 @@ def test_bitpadding_003():
     assert pad.padflag
     assert pad.bitcnt==63
     assert pad.padcnt == 1
-    assert pad.remove(b)[-1]&0xfe == ord(b'A')&0xfe
+    assert ord(pad.remove(b)[-1:])&0xfe == ord(b'A')&0xfe
 
 def test_pkcs7_001():
     pad = pkcs7(64)

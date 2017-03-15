@@ -4,7 +4,6 @@
 
 import struct
 import codecs
-from builtins import bytes as newbytes
 
 try:
     IntType = (int,long)
@@ -21,7 +20,7 @@ def pack(obj,fmt='<L'):
     assert fmt in ['<L','>L']
     s = [x.ival&0xff for x in obj.split(8)]
     if fmt=='>L': s.reverse()
-    return newbytes(s)
+    return struct.pack('%dB'%len(s), *s)
 
 # generalize struct.unpack to return one int value of
 # arbitrary bit length.
@@ -95,12 +94,15 @@ class Bits(object):
         self.ival = (self.ival<<1)|(x&1)
     elif isinstance(v,bytes):
       self.load(v,bitorder)
+    elif isinstance(v,str):
+      # We are using python3, because 'str' and 'bytes' are different
+      self.load(v.encode(),bitorder)
     else:
         raise TypeError(v)
     if size!=None: self.size = size
 
   def load(self,v,bitorder=-1):
-    bytestr = newbytes(v)
+    bytestr = struct.unpack('%dB'%len(v), v)
     self.size = len(bytestr)*8
     if bitorder==-1:
       l = [reverse_byte(c) for c in bytestr]
@@ -165,7 +167,7 @@ class Bits(object):
       s.append(reverse_byte(v&0xff))
       v = v>>8
       i += 8
-    return newbytes(s)
+    return struct.pack('%dB'%len(s), *s)
 
   def bytes(self):
     return self.__bytes__()
