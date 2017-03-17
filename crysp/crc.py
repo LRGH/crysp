@@ -45,8 +45,7 @@ def crc(data,table,Xinit=0,Xfinal=None):
     print("crc: bytes input required")
     return None
   r = Bits(Xinit,table[0].size)
-  data = struct.unpack("%dB"%len(data), data)
-  for b in data:
+  for b in struct.unpack("%dB"%len(data), data):
     p = table[(r.ival^b)&0xff]
     r = (r>>8)^p
   if Xfinal:

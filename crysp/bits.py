@@ -94,9 +94,6 @@ class Bits(object):
         self.ival = (self.ival<<1)|(x&1)
     elif isinstance(v,bytes):
       self.load(v,bitorder)
-    elif isinstance(v,str):
-      # We are using python3, because 'str' and 'bytes' are different
-      self.load(v.encode(),bitorder)
     else:
         raise TypeError(v)
     if size!=None: self.size = size
