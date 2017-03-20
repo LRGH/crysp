@@ -67,8 +67,8 @@ integer by using parameter bitorder=1:
 
    >>> b1 = Bits(10)
    >>> b2 = Bits([0,1,0,1])
-   >>> b3 = Bits('\x50',size=4)
-   >>> b4 = Bits('\x0a',size=4,bitorder=1)
+   >>> b3 = Bits(b'\x50',size=4)
+   >>> b4 = Bits(b'\x0a',size=4,bitorder=1)
    >>> b1==b2==b3==b4
    True
 
